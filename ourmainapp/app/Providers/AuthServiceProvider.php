@@ -13,7 +13,8 @@ class AuthServiceProvider extends ServiceProvider
      * @var array<class-string, class-string>
      */
     protected $policies = [
-        //
+        // Associate array - for Post model/resource the PostPolicy model should be applied
+        Post::class => PostPolicy::class
     ];
 
     /**

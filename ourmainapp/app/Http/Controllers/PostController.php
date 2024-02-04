@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 class PostController extends Controller
 {
     public function storeNewPost(Request $request) {
+        // validate the fields
         $incomingFields = $request->validate([
             'title' => 'required',
             'body' => 'required'
@@ -18,7 +19,6 @@ class PostController extends Controller
         $incomingFields['title'] = strip_tags($incomingFields['title']);
         $incomingFields['body'] = strip_tags($incomingFields['body']);
         $incomingFields['user_id'] = auth()->id();
-
         $newPost = Post::create($incomingFields);
         return redirect("/post/{$newPost->id}")->with('success', 'Blog post successfully created!!');
     }
@@ -33,5 +33,30 @@ class PostController extends Controller
         return view('single-post', ['post' => $post]);
     }
 
+    public function delete(Post $post) {
+        $post->delete();
+        // send user back to their profile upon deletion
+        return redirect('/profile/' . auth()->user()->username)->with('success', 'Suceessfully deleted.');
+    }
+
+    public function showEditForm(Post $post) {
+        // view the edit-post.blade file send $post to gather id
+        return view('edit-post', ['post' => $post]);
+    }
+
+    public function updateBlogPost(Post $post, Request $request) {
+        $incomingFields = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+        // sanitize html
+        $incomingFields['title'] = strip_tags($incomingFields['title']);
+        $incomingFields['body'] = strip_tags($incomingFields['body']);
+
+        // update post with the incomingfields
+        $post->update($incomingFields);
+        // send the user back with a success message
+        return back()->with('success', 'Post successfully updated.');
+    }
     
 }

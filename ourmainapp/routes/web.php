@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\ProfileController;
 
 
 /*
@@ -20,21 +21,26 @@ use App\Http\Controllers\UserController;
 // USER ROUTES //
 //=============//
 // Home
-Route::get('/', [UserController::class, "homepage"]);
-
+Route::get('/', [UserController::class, "homepage"])->name('login');
 // Register
-Route::post('/register', [UserController::class, "register"]);
-
+Route::post('/register', [UserController::class, "register"])->middleware('guest');
 // Login
-Route::post('/login', [UserController::class, "login"]);
-
+Route::post('/login', [UserController::class, "login"])->middleware('guest');
 // Logout
-Route::post('/logout', [UserController::class, "logout"]);
+Route::post('/logout', [UserController::class, "logout"])->middleware('mustBeLoggedIn');
+
 
 //=============//
 // BLOG ROUTES //
 //=============//
-Route::get('/create-post',[PostController::class, 'showCreateForm']);
-Route::post('/create-post',[PostController::class, 'storeNewPost']);
+Route::get('/create-post',[PostController::class, 'showCreateForm'])->middleware('mustBeLoggedIn');
+Route::post('/create-post',[PostController::class, 'storeNewPost'])->middleware('auth');
+Route::get('/post/{post}',[PostController::class, 'viewSinglePost'])->middleware('auth');
+Route::delete('/post/{post}',[PostController::class, 'delete'])->middleware('can:delete,post');
+Route::get('/post/{post}/edit',[PostController::class, 'showEditForm'])->middleware('can:update,post');
+Route::put('/post/{post}',[PostController::class, 'updateBlogPost'])->middleware('can:update,post');
 
-Route::get('/post/{post}',[PostController::class, 'viewSinglePost']);
+//================//
+// PROFILE ROUTES //
+//================//
+Route::get('/profile/{user:username}',[ProfileController::class, 'profile'])->middleware('auth');
