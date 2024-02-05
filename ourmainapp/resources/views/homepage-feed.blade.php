@@ -1,4 +1,4 @@
-<x-layout>
+<x-layout :doctitle="'Home'">
 <div class="container py-md-5 container--narrow">
     @unless($posts->isEmpty())
     <h2>Your feed</h2>
