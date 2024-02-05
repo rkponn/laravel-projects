@@ -5,13 +5,18 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
     public function homepage() {
         // globally available auth - if logged in or not
         if(auth()->check()) {
-            return view('homepage-feed');
+            return view('homepage-feed', [
+                'posts' => auth()->user()->feedPost()->latest()->paginate(4),
+                'username' => auth()->user()->username,
+                ]);
         } else {
             return view('homepage');
         }
@@ -49,5 +54,37 @@ class UserController extends Controller
         // access auth class -> logout method
         auth()->logout();
         return redirect('/')->with('success', 'You have logged out.');
+    }
+
+    public function showAvatarForm() {
+        return view('avatar-form');
+    }
+
+    public function storeAvatar(Request $request) {
+        // save the avatar
+        $request->validate([
+            'avatar' => 'required|image|max:5000'
+        ]);
+        $user = auth()->user();
+
+        // give the avatar file/image a unique name.
+        $filename = $user->id . '-' . uniqid() . '.jpg';
+        // make image certain size and type from request that we imported in file
+        $imgData = Image::make($request->file('avatar'))->fit(120)->encode('jpg');
+        Storage::put('public/avatars/' . $filename, $imgData);
+
+        // grab old avatar name to prevent storing more than 1 per user
+        $oldAvatar = $user->avatar;
+
+        // save to the database
+        $user->avatar = $filename;
+        $user->save();
+
+        if ($oldAvatar != "/fallback-avatar.jpg") {
+            // Filepath needs to be tweaked
+            Storage::delete(str_replace("/storage/", "public/", $oldAvatar));
+        }
+
+        return back()->with('success', 'New avatar uploaded.');
     }
 }
