@@ -1,6 +1,7 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\ChatController;
 use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
@@ -49,3 +50,6 @@ Route::get('/profile/{user:username}/following',[ProfileController::class, 'prof
 // FOLLOW ROUTES
 Route::post('/follow/{user:username}', [FollowController::class, 'follow'])->middleware('mustBeLoggedIn');
 Route::post('/unfollow/{user:username}', [FollowController::class, 'unfollow'])->middleware('mustBeLoggedIn');
+
+// CHAT ROUTES
+Route::post('/send-chat-message', [ChatController::class, 'sendChat'])->middleware('mustBeLoggedIn');

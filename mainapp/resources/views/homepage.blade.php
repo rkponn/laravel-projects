@@ -1,10 +1,14 @@
    <x-layout>
- 
+
     <div class="container py-md-5">
       <div class="row align-items-center">
         <div class="col-lg-7 py-3 py-md-5">
-          <h1 class="display-3">Remember Writing?</h1>
-          <p class="lead text-muted">Are you sick of short tweets and impersonal &ldquo;shared&rdquo; posts that are reminiscent of the late 90&rsquo;s email forwards? We believe getting back to actually writing is the key to enjoying the internet again.</p>
+          <h1 class="display-3">Lost Art of Writing</h1>
+          <p class="lead text-muted">
+            Are you yearning for more meaningful online interactions beyond the brief tweets and the all-too-familiar 
+            &ldquo;share&rdquo; button? We're on a mission to revive the art of writing, 
+            bringing depth, authenticity, and personal touch back to the internet. 
+            Join us in creating a space where your thoughts have the room to breathe and your words, the power to connect.</p>
         </div>
         <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5">
           <form action="/register" method="POST" id="registration-form">
@@ -41,7 +45,7 @@
               @enderror
             </div>
 
-            <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block">Sign up for OurApp</button>
+            <button type="submit" class="py-3 mt-4 btn btn-lg btn-success btn-block">Sign up</button>
           </form>
         </div>
       </div>
