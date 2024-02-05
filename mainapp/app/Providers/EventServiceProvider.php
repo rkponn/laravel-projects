@@ -15,7 +15,7 @@ class EventServiceProvider extends ServiceProvider
      * @var array<class-string, array<int, class-string>>
      */
     protected $listen = [
-        
+        // Events live in own file but listener in seperate file
         Registered::class => [
             SendEmailVerificationNotification::class,
         ],
