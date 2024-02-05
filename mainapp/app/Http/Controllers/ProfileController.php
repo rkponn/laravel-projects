@@ -44,4 +44,31 @@ class ProfileController extends Controller
         $this->getSharedData($user);
         return view('profile-following', ['following' => $user->following()->latest()->get()]);
     }
+
+    public function profileJson(User $user) {
+        // return only profile post json data
+        return response()->json(
+            [
+                'html' => view('profile-posts-only', ['posts' => $user->posts()->latest()->get()])->render(), 
+                'docTitle' => $user->username . "'s Profile"
+            ]);
+    }
+
+    public function profileFollowersJson(User $user) {
+        // return only profile followers json data
+        return response()->json(
+            [
+                'html' => view('profile-followers-only', ['followers' => $user->followers()->latest()->get()])->render(), 
+                'docTitle' => $user->username . "'s Followers"
+            ]);
+    }
+
+    public function profileFollowingJson(User $user) {
+        // return only profile following json data
+        return response()->json(
+            [
+                'html' => view('profile-following-only', ['following' => $user->following()->latest()->get()])->render(), 
+                'docTitle' => $user->username . "is Following"
+            ]);
+    }
 }
