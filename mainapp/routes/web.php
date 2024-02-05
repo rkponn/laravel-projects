@@ -47,6 +47,14 @@ Route::get('/profile/{user:username}',[ProfileController::class, 'profile'])->mi
 Route::get('/profile/{user:username}/followers',[ProfileController::class, 'profileFollowers'])->middleware('auth');
 Route::get('/profile/{user:username}/following',[ProfileController::class, 'profileFollowing'])->middleware('auth');
 
+
+Route::middleware('cache.headers:public;max_age=20;etag')->group(function() {
+// Group - disk cache for 20 seconds the data for post, followers, and following. (Speed improvement)
+    Route::get('/profile/{user:username}/json',[ProfileController::class, 'profileJson'])->middleware('auth');
+    Route::get('/profile/{user:username}/followers/json',[ProfileController::class, 'profileFollowersJson'])->middleware('auth');
+    Route::get('/profile/{user:username}/following/json',[ProfileController::class, 'profileFollowingJson'])->middleware('auth');
+});
+
 // FOLLOW ROUTES
 Route::post('/follow/{user:username}', [FollowController::class, 'follow'])->middleware('mustBeLoggedIn');
 Route::post('/unfollow/{user:username}', [FollowController::class, 'unfollow'])->middleware('mustBeLoggedIn');
