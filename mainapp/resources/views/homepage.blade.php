@@ -9,6 +9,7 @@
             &ldquo;share&rdquo; button? We're on a mission to revive the art of writing, 
             bringing depth, authenticity, and personal touch back to the internet. 
             Join us in creating a space where your thoughts have the room to breathe and your words, the power to connect.</p>
+            <span class="text-muted small">Our users have authored {{ $postCount }} posts.</span>
         </div>
         <div class="col-lg-5 pl-lg-5 pb-3 py-lg-5">
           <form action="/register" method="POST" id="registration-form">
