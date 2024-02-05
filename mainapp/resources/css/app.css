@@ -5,8 +5,8 @@ body,
   -moz-osx-font-smoothing: grayscale !important;
 }
 
-.header-bar {
-  background-color: #f9322c;
+.header-bar, .footer-bar {
+  background-color: #1a6298;
 }
 
 .container--narrow {
@@ -387,4 +387,25 @@ textarea.tall-textarea {
   border: none;
   outline: none;
   font-size: 0.75rem;
+}
+
+body, html {
+  height: 90%;
+  margin: 0;
+}
+
+.content {
+  min-height: 100%;
+  padding-bottom: 50px; /* Same as the footer's height */
+}
+
+footer {
+  height: 50px; /* Set this to the height of your footer */
+  width: 100%;
+  bottom: 0;
+  left: 0;
+}
+
+.footer-content {
+  color:white;
 }
