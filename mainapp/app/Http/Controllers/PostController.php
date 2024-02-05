@@ -66,5 +66,30 @@ class PostController extends Controller
         $posts->load('user:id,username,avatar');
         return $posts;
     }
+
+    // API related
+    public function deleteApi(Post $post) {
+        $post->delete();
+        // send user back to their profile upon deletion
+        return response()->json([
+            'message' => 'Post successfully deleted.'
+        ]);
+    }
+
+    public function storeNewPostApi(Request $request) {
+        // validate the fields
+        $incomingFields = $request->validate([
+            'title' => 'required',
+            'body' => 'required'
+        ]);
+
+        // sanitize html
+        $incomingFields['title'] = strip_tags($incomingFields['title']);
+        $incomingFields['body'] = strip_tags($incomingFields['body']);
+        $incomingFields['user_id'] = auth()->id();
+        $newPost = Post::create($incomingFields);
+        return $newPost->id;
+    }
+
     
 }
