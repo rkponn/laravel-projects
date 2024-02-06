@@ -27,13 +27,17 @@ composer install
 npm install
 ```
 
+#### Make sure to set up a .env file, you can use the sample in the repo.
+
+#### you will need to also setup mysql. and run the migrations
+#### if you want to see the chat feature create an account on pusher and also supply that information in your .env file
+
 ```
 php artisan key:generate
 php artisan migrate
 npm run dev
 php artisan serve
 ```
-
 
 
 ## License
