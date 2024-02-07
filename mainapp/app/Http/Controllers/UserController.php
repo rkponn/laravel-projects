@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
+    // method should be called index
     public function homepage() {
         // globally available auth - if logged in or not
         if(auth()->check()) {
@@ -28,6 +29,7 @@ class UserController extends Controller
         }
     }
 
+    // method should be called store
     public function register(Request $request) {
         $incomingFields = $request->validate([
             'username' => ['required', 'min:3', 'max:20', Rule::unique('users', 'username')],
@@ -41,6 +43,7 @@ class UserController extends Controller
         return redirect('/')->with('success', "Thank You $user->username, You have successfully registered.");
     }
 
+    // login method should be moved to a separate controller UserLoginController and called store
     public function login(Request $request) {
         $incomingFields = $request->validate([
             'loginusername' => 'required',
@@ -56,16 +59,19 @@ class UserController extends Controller
         }
     }
 
+    // login method should be moved to a separate controller UserLoginController and called delete
     public function logout() {
         // access auth class -> logout method
         auth()->logout();
         return redirect('/')->with('success', 'You have logged out.');
     }
 
+    // method should be in a separate controller and called create
     public function showAvatarForm() {
         return view('avatar-form');
     }
 
+    // method should be in a separate controller and called store
     public function storeAvatar(Request $request) {
         // save the avatar
         $request->validate([
@@ -94,6 +100,7 @@ class UserController extends Controller
         return back()->with('success', 'New avatar uploaded.');
     }
 
+    // method should be in a separate controller and called store
     // API related
     public function loginApi(Request $request) {
         $incomingFields = $request->validate([
