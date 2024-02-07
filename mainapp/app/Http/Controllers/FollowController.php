@@ -34,7 +34,7 @@ class FollowController extends Controller
 
     }
 
-    public function destroy(User $user) {
+    public function destroy(User $user): \Illuminate\Http\RedirectResponse {
         Follow::where('user_id', '=', auth()->user()->id)
                             ->where('followeduser', '=', $user->id)
                             ->delete();

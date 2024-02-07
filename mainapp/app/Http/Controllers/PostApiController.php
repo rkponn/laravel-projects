@@ -8,7 +8,7 @@ use Illuminate\Http\Request;
 class PostApiController extends Controller
 {
     // Delete post
-    public function destroy(Post $post) {
+    public function destroy(Post $post): \Illuminate\Http\JsonResponse {
         $post->delete();
         // send user back to their profile upon deletion
         return response()->json([

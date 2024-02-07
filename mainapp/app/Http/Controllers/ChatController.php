@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class ChatController extends Controller
 {
-    public function create(Request $request) {
+    public function create(Request $request): \Illuminate\Http\Response {
         // Need to have a message before we send request
         $formFields = $request->validate([
             'textvalue' => 'required'
