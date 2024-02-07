@@ -5,10 +5,11 @@ namespace App\Models;
 use Laravel\Scout\Searchable;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Database\Factories\PostFactory;
 
 class Post extends Model
-{   
-    use Searchable;
+{
+    // use Searchable;
     use HasFactory;
 
     protected $fillable = [
@@ -27,5 +28,15 @@ class Post extends Model
             'title' => $this->title,
             'body' => $this->body,
         ];
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory<static>
+     */
+    protected static function newFactory()
+    {
+        return PostFactory::new();
     }
 }

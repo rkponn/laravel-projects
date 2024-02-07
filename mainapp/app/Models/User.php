@@ -8,6 +8,7 @@ use Illuminate\Notifications\Notifiable;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Database\Factories\UserFactory;
 
 class User extends Authenticatable
 {
@@ -27,8 +28,9 @@ class User extends Authenticatable
     /*
     Filter what the incoming value for avatar will be.
     */
-    protected function avatar(): Attribute {
-        return Attribute::make(get: function($value) {
+    protected function avatar(): Attribute
+    {
+        return Attribute::get(function($value): string {
             return $value ? '/storage/avatars/' . $value : '/fallback-avatar.jpg';
         });
     }
@@ -71,5 +73,15 @@ class User extends Authenticatable
     public function feedPost() {
         // in between (intermediate)
         return $this->hasManyThrough(Post::class, Follow::class, 'user_id', 'user_id', 'id', 'followeduser');
+    }
+
+    /**
+     * Create a new factory instance for the model.
+     *
+     * @return \Illuminate\Database\Eloquent\Factories\Factory<static>
+     */
+    protected static function newFactory()
+    {
+        return UserFactory::new();
     }
 }

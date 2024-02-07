@@ -6,6 +6,8 @@ namespace Database\Seeders;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User;
+use App\Models\Post;
 
 class DatabaseSeeder extends Seeder
 {
@@ -16,62 +18,33 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('users')->insert([
-            'id' => 100,
-            'username' => 'brad',
-            'email' => 'brad@local',
-            'password' => Hash::make('qwertyqwerty'),
-            'isAdmin' => 1
-        ]);
+        /**
+         * @see https://laravel.com/docs/10.x/eloquent-factories#factory-relationships
+         */
+        Post::factory(20)
+            ->has(
+                User::factory()
+                    ->count(1)
+                    ->state(function (array $attributes, Post $post) {
+                        return ['password' => Hash::make('qwertyqwerty'),];
+                    }),
+                'user'
+            )
+            ->create();
 
-        DB::table('users')->insert([
-            'id' => 200,
-            'username' => 'barksalot',
-            'email' => 'barksalot@local',
-            'password' => Hash::make('qwertyqwerty')
-        ]);
+        // DB::table('follows')->insert([
+        //     'user_id' => 200,
+        //     'followeduser' => 100
+        // ]);
 
-        DB::table('users')->insert([
-            'id' => 300,
-            'username' => 'meowsalot',
-            'email' => 'meowsalot@local',
-            'password' => Hash::make('qwertyqwerty')
-        ]);
+        // DB::table('follows')->insert([
+        //     'user_id' => 300,
+        //     'followeduser' => 100
+        // ]);
 
-        DB::table('posts')->insert([
-            'user_id' => 100,
-            'title' => 'My First Post',
-            'body' => 'Lorem ipsum this is my post.',
-            'created_at' => date("Y-m-d H:i:s")
-        ]);
-
-        DB::table('posts')->insert([
-            'user_id' => 100,
-            'title' => 'My Second Post: HTML',
-            'body' => 'HTML stands for Hyper Text Markup Language',
-            'created_at' => date("Y-m-d H:i:s")
-        ]);
-
-        DB::table('posts')->insert([
-            'user_id' => 200,
-            'title' => 'Being a Dog Is Fun',
-            'body' => 'I like to run and bark.',
-            'created_at' => date("Y-m-d H:i:s")
-        ]);
-
-        DB::table('follows')->insert([
-            'user_id' => 200,
-            'followeduser' => 100
-        ]);
-
-        DB::table('follows')->insert([
-            'user_id' => 300,
-            'followeduser' => 100
-        ]);
-
-        DB::table('follows')->insert([
-            'user_id' => 300,
-            'followeduser' => 200
-        ]);
+        // DB::table('follows')->insert([
+        //     'user_id' => 300,
+        //     'followeduser' => 200
+        // ]);
     }
 }
