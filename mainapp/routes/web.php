@@ -9,6 +9,9 @@ use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\FollowController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\ProfilePostController;
+use App\Http\Controllers\ProfileFollowerController;
+use App\Http\Controllers\ProfileFollowingController;
 
 
 /*
@@ -45,22 +48,22 @@ Route::get('/post/{post}/edit',[PostController::class, 'edit'])->middleware('can
 Route::put('/post/{post}',[PostController::class, 'update'])->middleware('can:update,post');
 Route::delete('/post/{post}',[PostController::class, 'destroy'])->middleware('can:delete,post');
 
-// PROFILE ROUTES 
-Route::get('/profile/{user:username}',[ProfileController::class, 'profile'])->middleware('auth');
-Route::get('/profile/{user:username}/followers',[ProfileController::class, 'profileFollowers'])->middleware('auth');
-Route::get('/profile/{user:username}/following',[ProfileController::class, 'profileFollowing'])->middleware('auth');
+// Profile 
+Route::get('/profile/{user:username}',[ProfilePostController::class, 'show'])->middleware('auth');
+Route::get('/profile/{user:username}/followers',[ProfileFollowerController::class, 'show'])->middleware('auth');
+Route::get('/profile/{user:username}/following',[ProfileFollowingController::class, 'show'])->middleware('auth');
 
 
-Route::middleware('cache.headers:public;max_age=20;etag')->group(function() {
-// Group - disk cache for 20 seconds the data for post, followers, and following. (Speed improvement)
-    Route::get('/profile/{user:username}/json',[ProfileController::class, 'profileJson'])->middleware('auth');
-    Route::get('/profile/{user:username}/followers/json',[ProfileController::class, 'profileFollowersJson'])->middleware('auth');
-    Route::get('/profile/{user:username}/following/json',[ProfileController::class, 'profileFollowingJson'])->middleware('auth');
+Route::middleware('cache.headers:public;max_age=2;etag')->group(function() {
+// Group - disk cache for 2 seconds the data for post, followers, and following. (Speed improvement)
+    Route::get('/profile/{user:username}/json',[ProfilePostController::class, 'index'])->middleware('auth');
+    Route::get('/profile/{user:username}/followers/json',[ProfileFollowerController::class, 'index'])->middleware('auth');
+    Route::get('/profile/{user:username}/following/json',[ProfileFollowingController::class, 'index'])->middleware('auth');
 });
 
-// FOLLOW ROUTES
-Route::post('/follow/{user:username}', [FollowController::class, 'follow'])->middleware('mustBeLoggedIn');
-Route::post('/unfollow/{user:username}', [FollowController::class, 'unfollow'])->middleware('mustBeLoggedIn');
+// Follow Routes
+Route::post('/follow/{user:username}', [FollowController::class, 'create'])->middleware('mustBeLoggedIn');
+Route::post('/unfollow/{user:username}', [FollowController::class, 'destroy'])->middleware('mustBeLoggedIn');
 
-// CHAT ROUTES
-Route::post('/send-chat-message', [ChatController::class, 'sendChat'])->middleware('mustBeLoggedIn');
+// Chat Routes
+Route::post('/send-chat-message', [ChatController::class, 'create'])->middleware('mustBeLoggedIn');
