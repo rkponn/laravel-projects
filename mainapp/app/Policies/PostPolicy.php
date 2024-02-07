@@ -38,7 +38,7 @@ class PostPolicy
     public function update(User $user, Post $post): bool
     {
         // Allow Admins to change posts
-        if($user->isAdmin === 1) {
+        if($user->is_admin === 1) {
             return true;
         }
         // does logged in user match the blog post user id
@@ -51,7 +51,7 @@ class PostPolicy
     public function delete(User $user, Post $post): bool
     {
         // Allow Admins to change posts
-        if($user->isAdmin === 1) {
+        if($user->is_admin === 1) {
             return true;
         }
         // does logged in user match the blog post user id
