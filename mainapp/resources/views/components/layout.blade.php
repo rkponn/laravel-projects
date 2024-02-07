@@ -39,7 +39,7 @@
             style="width: 32px; height: 32px; border-radius: 16px" 
             src="{{auth()->user()->avatar}}" />
           </a>
-          <a class="btn btn-sm btn-success mr-2" href="/create-post">Create Post</a>
+          <a class="btn btn-sm btn-success mr-2" href="/post">Create Post</a>
           <form action="/logout" method="POST" class="d-inline">
             @csrf
             <button class="btn btn-sm btn-secondary">Sign Out</button>
