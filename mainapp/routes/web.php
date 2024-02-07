@@ -7,7 +7,6 @@ use App\Http\Controllers\PostController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\AvatarController;
 use App\Http\Controllers\FollowController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserLoginController;
 use App\Http\Controllers\ProfilePostController;
 use App\Http\Controllers\ProfileFollowerController;
@@ -26,10 +25,10 @@ use App\Http\Controllers\ProfileFollowingController;
 */
 
 // Home Routes
-Route::get('/', [HomeController::class, 'index'])->name('user.index');
+Route::get('/', [HomeController::class, 'index'])->name('home.index');
 
 // User Routes
-Route::post('/register', [UserController::class, 'create'])->middleware('guest');
+Route::post('/register', [UserController::class, 'store'])->middleware('guest');
 
 // User Session Routes
 Route::post('/login', [UserLoginController::class, 'store'])->middleware('guest');

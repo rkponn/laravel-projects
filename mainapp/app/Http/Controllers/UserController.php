@@ -25,6 +25,6 @@ class UserController extends Controller
         $user = User::create($incomingFields);
         // send the cookie session so user is logged in auto after registering
         auth()->login($user);
-        return redirect(route('user.index'))->with('success', "Thank You $user->username, You have successfully registered.");
+        return redirect(route('home.index'))->with('success', "Thank You $user->username, You have successfully registered.");
     }
 }
