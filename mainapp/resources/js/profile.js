@@ -22,7 +22,7 @@ export default class Profile {
     this.links.forEach(async link => {
       if (link.getAttribute("href") == window.location.pathname) {
         const response = await axios.get(link.href + "/json")
-        this.contentArea.innerHTML = DOMPurify.sanitize(response.data.theHTML)
+        this.contentArea.innerHTML = DOMPurify.sanitize(response.data.html)
         document.title = response.data.docTitle + " | Pavillion"
         link.classList.add("active")
       }
@@ -35,7 +35,7 @@ export default class Profile {
     e.target.classList.add("active")
     e.preventDefault()
     const response = await axios.get(e.target.href + "/json")
-    this.contentArea.innerHTML = DOMPurify.sanitize(response.data.theHTML)
+    this.contentArea.innerHTML = DOMPurify.sanitize(response.data.html)
     document.title = response.data.docTitle + " | Pavillion"
 
     history.pushState({}, "", e.target.href)

@@ -9,7 +9,7 @@ use Database\Factories\PostFactory;
 
 class Post extends Model
 {
-    // use Searchable;
+    use Searchable;
     use HasFactory;
 
     protected $fillable = [

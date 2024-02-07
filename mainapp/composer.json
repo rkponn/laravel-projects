@@ -9,6 +9,7 @@
         "algolia/algoliasearch-client-php": "^3.4",
         "guzzlehttp/guzzle": "^7.2",
         "intervention/image": "2.7.2",
+        "jason-guru/laravel-make-repository": "^0.0.3",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/scout": "^10.8",
