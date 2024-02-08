@@ -15,16 +15,18 @@ class UserController extends Controller
      */
 
     // Register Method
-    public function store(Request $request): \Illuminate\Http\RedirectResponse {
+    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    {
         $incomingFields = $request->validate([
             'username' => ['required', 'min:3', 'max:20', Rule::unique('users', 'username')],
             'email' => ['required', 'email', Rule::unique('users', 'email')],
-            'password' => ['required', 'min:8', 'confirmed']
+            'password' => ['required', 'min:8', 'confirmed'],
         ]);
         // store into db
         $user = User::create($incomingFields);
         // send the cookie session so user is logged in auto after registering
         auth()->login($user);
+
         return redirect(route('home.index'))->with('success', "Thank You $user->username, You have successfully registered.");
     }
 }
