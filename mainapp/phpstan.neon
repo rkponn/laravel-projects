@@ -1,0 +1,9 @@
+# @see - https://github.com/larastan/larastan?tab=readme-ov-file#-getting-started-in-3-steps
+includes:
+    - vendor/larastan/larastan/extension.neon
+parameters:
+    paths:
+        - app/
+
+    # Level 9 is the highest level
+    level: 1
