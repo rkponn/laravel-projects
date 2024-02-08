@@ -3,12 +3,13 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
+use Illuminate\View\View;
 use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
     // Home Page Method
-    public function index(): \Illuminate\View\View
+    public function index(): View
     {
         // globally available auth - if logged in or not
         if (auth()->check()) {

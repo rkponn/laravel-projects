@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use App\Services\ProfileViewService;
 use Illuminate\Support\Facades\View;
+use Illuminate\View\View as ViewView;
 
 class ProfilePostController extends Controller
 {
@@ -15,16 +17,8 @@ class ProfilePostController extends Controller
         $this->profileViewService = $profileViewService;
     }
 
-    public function show(User $user): \Illuminate\View\View
-    {
-        $sharedData = $this->profileViewService->getSharedData($user);
-        View::share('sharedData', $sharedData);
-
-        return view('profile-post', ['posts' => $user->posts()->latest()->get()]);
-    }
-
     // Return raw html data for profile posts, and the document title. Loads data so that the profile page can be updated without a full page refresh.
-    public function index(User $user): \Illuminate\Http\JsonResponse
+    public function index(User $user): JsonResponse
     {
         // return only profile post json data
         return response()->json(
@@ -33,4 +27,13 @@ class ProfilePostController extends Controller
                 'docTitle' => $user->username."'s Profile",
             ]);
     }
+
+    public function show(User $user): ViewView
+    {
+        $sharedData = $this->profileViewService->getSharedData($user);
+        View::share('sharedData', $sharedData);
+
+        return view('profile-post', ['posts' => $user->posts()->latest()->get()]);
+    }
+
 }

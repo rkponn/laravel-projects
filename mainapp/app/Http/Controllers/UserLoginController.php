@@ -3,11 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\RedirectResponse;
 
 class UserLoginController extends Controller
 {
     // Login method
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $incomingFields = $request->validate([
             'loginusername' => 'required',
@@ -25,7 +26,7 @@ class UserLoginController extends Controller
     }
 
     // Logout method
-    public function destroy(): \Illuminate\Http\RedirectResponse
+    public function destroy(): RedirectResponse
     {
         // access auth class -> logout method
         auth()->logout();

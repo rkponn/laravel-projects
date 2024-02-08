@@ -4,11 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class UserLoginApiController extends Controller
 {
     // login
-    public function create(Request $request): \Illuminate\Http\JsonResponse
+    public function create(Request $request): JsonResponse
     {
         $incomingFields = $request->validate([
             'username' => 'required',

@@ -2,20 +2,22 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\View\View;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
+use Illuminate\Http\RedirectResponse;
 use Intervention\Image\Facades\Image;
+use Illuminate\Support\Facades\Storage;
 
 class AvatarController extends Controller
 {
     // Avatar form
-    public function create(): \Illuminate\View\View
+    public function create(): View
     {
         return view('avatar-form');
     }
 
     // Store the avatar
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         // save the avatar
         $request->validate([

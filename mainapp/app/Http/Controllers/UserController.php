@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Validation\Rule;
+use Illuminate\Http\RedirectResponse;
 
 class UserController extends Controller
 {
@@ -15,7 +16,7 @@ class UserController extends Controller
      */
 
     // Register Method
-    public function store(Request $request): \Illuminate\Http\RedirectResponse
+    public function store(Request $request): RedirectResponse
     {
         $incomingFields = $request->validate([
             'username' => ['required', 'min:3', 'max:20', Rule::unique('users', 'username')],

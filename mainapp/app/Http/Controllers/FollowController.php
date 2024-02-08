@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Follow;
 use App\Models\User;
+use App\Models\Follow;
+use Illuminate\Http\RedirectResponse;
 
 class FollowController extends Controller
 {
-    public function create(User $user): \Illuminate\Http\RedirectResponse
+    public function create(User $user): RedirectResponse
     {
         // you cannot follow yourself
         if ($user->id === auth()->user()->id) {

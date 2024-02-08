@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use App\Services\ProfileViewService;
 use Illuminate\Support\Facades\View;
+use Illuminate\View\View as ViewView;
 
 class ProfileFollowingController extends Controller
 {
@@ -15,17 +17,8 @@ class ProfileFollowingController extends Controller
         $this->profileViewService = $profileViewService;
     }
 
-    public function show(User $user): \Illuminate\View\View
-    {
-        $sharedData = $this->profileViewService->getSharedData($user);
-        $following = $this->profileViewService->getProfileFollowing($user);
-        View::share('sharedData', $sharedData); // Sharing data with the view
-
-        return view('profile-following', ['following' => $following]);
-    }
-
     // Return raw html data for profile following, and the document title. Loads data so that the profile page can be updated without a full page refresh.
-    public function index(User $user): \Illuminate\Http\JsonResponse
+    public function index(User $user): JsonResponse
     {
         // return only profile following json data
         return response()->json(
@@ -33,5 +26,14 @@ class ProfileFollowingController extends Controller
                 'html' => view('profile-following-only', ['following' => $user->following()->latest()->get()])->render(),
                 'docTitle' => $user->username.'is Following',
             ]);
+    }
+
+    public function show(User $user): ViewView
+    {
+        $sharedData = $this->profileViewService->getSharedData($user);
+        $following = $this->profileViewService->getProfileFollowing($user);
+        View::share('sharedData', $sharedData); // Sharing data with the view
+
+        return view('profile-following', ['following' => $following]);
     }
 }

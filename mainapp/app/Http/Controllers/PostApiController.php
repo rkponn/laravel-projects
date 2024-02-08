@@ -4,19 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 
 class PostApiController extends Controller
 {
-    // Delete post
-    public function destroy(Post $post): \Illuminate\Http\JsonResponse
-    {
-        $post->delete();
-
-        // send user back to their profile upon deletion
-        return response()->json([
-            'message' => 'Post successfully deleted.',
-        ]);
-    }
 
     // Store post
     public function store(Request $request): int
@@ -34,5 +25,16 @@ class PostApiController extends Controller
         $newPost = Post::create($incomingFields);
 
         return $newPost->id;
+    }
+
+    // Delete post
+    public function destroy(Post $post): JsonResponse
+    {
+        $post->delete();
+
+        // send user back to their profile upon deletion
+        return response()->json([
+            'message' => 'Post successfully deleted.',
+        ]);
     }
 }

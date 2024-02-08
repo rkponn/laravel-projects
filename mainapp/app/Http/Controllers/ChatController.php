@@ -4,10 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Events\ChatMessage;
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 
 class ChatController extends Controller
 {
-    public function create(Request $request): \Illuminate\Http\Response
+    public function create(Request $request): Response
     {
         // Need to have a message before we send request
         $formFields = $request->validate([
