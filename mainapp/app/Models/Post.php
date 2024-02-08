@@ -3,9 +3,17 @@
 namespace App\Models;
 
 use Database\Factories\PostFactory;
+
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Laravel\Scout\Searchable;
+use Illuminate\Support\Str;
+
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
+
 
 class Post extends Model
 {
@@ -30,6 +38,19 @@ class Post extends Model
             'title' => $this->title,
             'body' => $this->body,
         ];
+    }
+
+    protected function title(): Attribute
+    {
+        return Attribute::set(fn (string $value) => strip_tags($value));
+    }
+
+    protected function body(): Attribute
+    {
+        return Attribute::make(
+            get: fn (string $value) => Str::markdown($value),
+            set: fn (string $value) => strip_tags($value),
+        );
     }
 
     /**
