@@ -3,12 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Laravel\Sanctum\HasApiTokens;
-use Illuminate\Notifications\Notifiable;
+use Database\Factories\UserFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
-use Database\Factories\UserFactory;
+use Illuminate\Notifications\Notifiable;
+use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
@@ -30,8 +30,8 @@ class User extends Authenticatable
     */
     protected function avatar(): Attribute
     {
-        return Attribute::get(function($value): string {
-            return $value ? '/storage/avatars/' . $value : '/fallback-avatar.jpg';
+        return Attribute::get(function ($value): string {
+            return $value ? '/storage/avatars/'.$value : '/fallback-avatar.jpg';
         });
     }
 
@@ -56,21 +56,25 @@ class User extends Authenticatable
     ];
 
     // Associations
-    public function posts() {
+    public function posts()
+    {
         // return relationship between user and a post.
         return $this->hasMany(Post::class, 'user_id');
     }
 
-    public function followers() {
+    public function followers()
+    {
         // following the foreign
         return $this->hasMany(Follow::class, 'followeduser');
     }
 
-    public function following() {
+    public function following()
+    {
         return $this->hasMany(Follow::class, 'user_id');
     }
 
-    public function feedPost() {
+    public function feedPost()
+    {
         // in between (intermediate)
         return $this->hasManyThrough(Post::class, Follow::class, 'user_id', 'user_id', 'id', 'followeduser');
     }
