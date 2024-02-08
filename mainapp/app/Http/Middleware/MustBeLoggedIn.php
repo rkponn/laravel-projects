@@ -18,6 +18,7 @@ class MustBeLoggedIn
         if (auth()->check()) {
             return $next($request);
         }
+
         return redirect('/')->with('failure', 'You must be logged in!!');
     }
 }

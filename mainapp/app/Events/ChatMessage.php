@@ -2,11 +2,8 @@
 
 namespace App\Events;
 
-use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
-use Illuminate\Broadcasting\PresenceChannel;
 use Illuminate\Broadcasting\PrivateChannel;
-use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcastNow;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
@@ -14,8 +11,10 @@ use Illuminate\Queue\SerializesModels;
 class ChatMessage implements ShouldBroadcastNow
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
-    // 
+
+    //
     public $chat;
+
     /**
      * Create a new event instance.
      */
@@ -24,7 +23,7 @@ class ChatMessage implements ShouldBroadcastNow
         $this->chat = [
             'username' => $chat['username'],
             'textvalue' => $chat['textvalue'],
-            'avatar' => $chat['avatar']
+            'avatar' => $chat['avatar'],
         ];
     }
 
