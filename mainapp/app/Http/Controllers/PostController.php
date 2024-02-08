@@ -41,9 +41,6 @@ class PostController extends Controller
     // Show Post
     public function show(Post $post): View
     {
-        // allow markdown - since sanitize is in place
-        $post['body'] = Str::markdown($post->body);
-
         return view('single-post', ['post' => $post]);
     }
 
