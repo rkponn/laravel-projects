@@ -6,6 +6,7 @@ use Database\Factories\PostFactory;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
 use Laravel\Scout\Searchable;
 
 class Post extends Model
@@ -41,6 +42,13 @@ class Post extends Model
     protected function body(): Attribute
     {
         return Attribute::set(fn (string $value) => strip_tags($value));
+    }
+
+    protected function bodyMarkdown(): Attribute
+    {
+        return Attribute::make(
+            get: fn ($value) => $value ? Str::markdown($value) : '',
+        );
     }
 
     /**

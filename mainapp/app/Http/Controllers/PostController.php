@@ -6,7 +6,6 @@ use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Support\Str;
 use Illuminate\View\View;
 
 class PostController extends Controller
@@ -45,9 +44,7 @@ class PostController extends Controller
     public function show(Post $post): View
     {
         // allow markdown - since sanitize is in place
-        $post['body'] = Str::markdown($post->body);
-
-        return view('single-post', ['post' => $post]);
+        return view('single-post', ['post' => $post, 'bodyMarkdown' => $post->body_markdown]);
     }
 
     // Edit Post
