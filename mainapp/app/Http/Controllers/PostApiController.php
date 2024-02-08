@@ -3,12 +3,11 @@
 namespace App\Http\Controllers;
 
 use App\Models\Post;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
+use Illuminate\Http\Request;
 
 class PostApiController extends Controller
 {
-
     // Store post
     public function store(Request $request): int
     {

@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Models\Follow;
+use App\Models\User;
 use Illuminate\Http\RedirectResponse;
 
 class FollowController extends Controller

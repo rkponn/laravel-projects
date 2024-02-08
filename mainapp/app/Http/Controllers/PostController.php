@@ -11,9 +11,8 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
-
     // Search for posts
-    public function index($term): Collection 
+    public function index($term): Collection
     {
         // Performs a search for posts based on term and returns a collection of posts with user information
         $postIds = Post::search($term)->keys();
@@ -24,7 +23,7 @@ class PostController extends Controller
     }
 
     // Create post
-    public function create(): View 
+    public function create(): View
     {
         return view('create-post');
     }
@@ -38,19 +37,21 @@ class PostController extends Controller
             'body' => $request->body,
             'user_id' => auth()->id(),
         ]);
+
         return redirect("/post/{$newPost->id}")->with('success', 'Blog post successfully created!!');
     }
 
     // Show Post
-    public function show(Post $post): View 
+    public function show(Post $post): View
     {
         // allow markdown - since sanitize is in place
         $post['body'] = Str::markdown($post->body);
+
         return view('single-post', ['post' => $post]);
     }
 
     // Edit Post
-    public function edit(Post $post): View 
+    public function edit(Post $post): View
     {
         // send $post to gather id
         return view('edit-post', ['post' => $post]);
@@ -64,16 +65,17 @@ class PostController extends Controller
             'title' => $request->title,
             'body' => $request->body,
         ]);
+
         // send the user back with a success message
         return back()->with('success', 'Post successfully updated.');
     }
 
     // Delete Post
-    public function destroy(Post $post): RedirectResponse 
+    public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
+
         // send user back to their profile upon deletion
         return redirect('/profile/'.auth()->user()->username)->with('success', 'Suceessfully deleted.');
     }
-
 }

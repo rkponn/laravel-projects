@@ -3,8 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-use Illuminate\Http\JsonResponse;
 use App\Services\ProfileViewService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\View;
 use Illuminate\View\View as ViewView;
 
