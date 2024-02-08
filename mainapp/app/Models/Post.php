@@ -2,15 +2,16 @@
 
 namespace App\Models;
 
-use Laravel\Scout\Searchable;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Database\Factories\PostFactory;
+use Illuminate\Database\Eloquent\Casts\Attribute;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
-    use Searchable;
     use HasFactory;
+    use Searchable;
 
     protected $fillable = [
         'title',
@@ -18,16 +19,28 @@ class Post extends Model
         'user_id',
     ];
 
-    public function user() {
+    public function user()
+    {
         return $this->belongsTo(User::class, 'user_id');
     }
 
-    public function toSearchableArray() {
+    public function toSearchableArray()
+    {
         // Dont want to search the whole database, instead search through columns
         return [
             'title' => $this->title,
             'body' => $this->body,
         ];
+    }
+
+    protected function title(): Attribute
+    {
+        return Attribute::set(fn (string $value) => strip_tags($value));
+    }
+
+    protected function body(): Attribute
+    {
+        return Attribute::set(fn (string $value) => strip_tags($value));
     }
 
     /**

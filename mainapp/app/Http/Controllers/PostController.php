@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\PostRequest;
 use App\Models\Post;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 use Illuminate\View\View;
 
@@ -14,11 +14,9 @@ class PostController extends Controller
     public function index($term): Collection
     {
         // search becomes available through Laravel Scout
-        $posts = Post::search($term)->get();
-        // include some additional objects in the payload
-        $posts->load('user:id,username,avatar');
-
-        return $posts;
+        return Post::search($term)
+            ->with(['user:id,username,avatar'])
+            ->get();
     }
 
     // Create post
@@ -28,19 +26,14 @@ class PostController extends Controller
     }
 
     // Store post
-    public function store(Request $request): RedirectResponse
+    public function store(PostRequest $request): RedirectResponse
     {
-        // validate the fields
-        $incomingFields = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
-
         // sanitize html
-        $incomingFields['title'] = strip_tags($incomingFields['title']);
-        $incomingFields['body'] = strip_tags($incomingFields['body']);
-        $incomingFields['user_id'] = auth()->id();
-        $newPost = Post::create($incomingFields);
+        $newPost = Post::create([
+            'title' => $request->title,
+            'body' => $request->body,
+            'user_id' => auth()->id(),
+        ]);
 
         return redirect("/post/{$newPost->id}")->with('success', 'Blog post successfully created!!');
     }
@@ -62,18 +55,13 @@ class PostController extends Controller
     }
 
     // Update Post
-    public function update(Post $post, Request $request): RedirectResponse
+    public function update(Post $post, PostRequest $request): RedirectResponse
     {
-        $incomingFields = $request->validate([
-            'title' => 'required',
-            'body' => 'required',
-        ]);
-        // sanitize html
-        $incomingFields['title'] = strip_tags($incomingFields['title']);
-        $incomingFields['body'] = strip_tags($incomingFields['body']);
-
         // update post with the incomingfields
-        $post->update($incomingFields);
+        $post->update([
+            'title' => $request->title,
+            'body' => $request->body,
+        ]);
 
         // send the user back with a success message
         return back()->with('success', 'Post successfully updated.');
