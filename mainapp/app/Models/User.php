@@ -62,6 +62,12 @@ class User extends Authenticatable
         return $this->hasMany(Post::class, 'user_id');
     }
 
+    public function comments()
+    {
+        // return relationship between user and a comment.
+        return $this->hasMany(Comment::class, 'user_id');
+    }
+
     public function followers()
     {
         // following the foreign

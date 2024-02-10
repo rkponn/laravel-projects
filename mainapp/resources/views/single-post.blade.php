@@ -21,6 +21,28 @@
 
       <div class="body-content">
         {!! $post->body !!}
-    </div>
+      </div>
+
+      <div class="container mt-5">
+      <h4>Comments</h4>
+      <div>
+        @include('comment-form')
+      </div>
+      <div class="comments mt-3">
+          @foreach($post->comments as $comment)
+            <div class="comment">
+              <div class="d-flex">
+                <div>
+                  <a href="/profile/{{$comment->user->username}}"><img class="avatar-tiny" src="{{$comment->user->avatar}}" /></a>
+                </div>
+                <div class="ml-3">
+                  <p>{{$comment->body}}</p>
+                  <p class="text-muted small">Posted by {{$comment->user->username}} on {{$comment->created_at->format('n/j/Y')}}</p>
+                </div>
+              </div>
+            </div>
+          @endforeach
+      </div>
+      </div>
     </div>
 </x-layout>

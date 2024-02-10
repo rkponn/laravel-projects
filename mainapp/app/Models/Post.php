@@ -26,9 +26,15 @@ class Post extends Model
         return $this->belongsTo(User::class, 'user_id');
     }
 
+    // comment relationship
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
+
     public function toSearchableArray()
     {
-        // Dont want to search the whole database, instead search through columns
+        // Don't want to search the whole database, instead search through columns
         return [
             'title' => $this->title,
             'body' => $this->body,

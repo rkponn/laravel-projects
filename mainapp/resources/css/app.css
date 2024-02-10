@@ -396,11 +396,11 @@ body, html {
 
 .content {
   min-height: 100%;
-  padding-bottom: 50px; /* Same as the footer's height */
+  padding-bottom: 50px;
 }
 
 footer {
-  height: 50px; /* Set this to the height of your footer */
+  height: 50px;
   width: 100%;
   bottom: 0;
   left: 0;
@@ -408,4 +408,11 @@ footer {
 
 .footer-content {
   color:white;
+}
+
+.comment-input {
+  width: 100%;
+  height: 50px;
+  margin-bottom: 5px;
+  border-radius: 3px;
 }
