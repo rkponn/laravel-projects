@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-// use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -29,6 +29,14 @@ class DatabaseSeeder extends Seeder
                         return ['password' => Hash::make('qwertyqwerty')];
                     }),
                 'user'
+            )
+            ->has(
+                Comment::factory()
+                    ->count(5)
+                    ->state(function (array $attributes, Post $post) {
+                        return ['user_id' => $post->user_id];
+                    }),
+                'comments'
             )
             ->create();
 
