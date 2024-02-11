@@ -11,7 +11,7 @@
             <div id="comment-text-{{ $comment->id }}">
               <p>{{$comment->body}}</p>
             </div>
-            <textarea id="comment-edit-{{ $comment->id }}" class="form-control" style="display:none; width: 600px;">{{$comment->body}}</textarea>
+            <textarea id="comment-edit-{{ $comment->id }}" class="form-control comment-box">{{$comment->body}}</textarea>
             @if(auth()->check() && auth()->user()->id === $comment->user_id)
             <div class="mt-1">
                 <a onclick="editComment({{ $comment->id }})" class="text-primary small"><i class="fas fa-edit"></i></a>

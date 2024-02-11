@@ -62,7 +62,7 @@
             const data = { body: updatedContent };
       
             // Axios POST request
-            const response = await axios.post('/comment/' + commentId + '/update', data, {
+            const response = await axios.post('/comment/' + commentId, data, {
               headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token
@@ -91,7 +91,7 @@
         async function deleteComment(commentId) {
           try {
             // Axios DELETE request
-            const response = await axios.delete('/comment/' + commentId + '/delete', {
+            const response = await axios.delete('/comment/' + commentId, {
               headers: {
                 'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token
               }
