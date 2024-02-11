@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Comment;
-use Illuminate\Http\Request;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\Http\Request;
 
 class CommentController extends Controller
 {
@@ -14,14 +14,14 @@ class CommentController extends Controller
     {
         // Validate the request
         $request->validate([
-            'body' => 'required|max:255'
+            'body' => 'required|max:255',
         ]);
 
         // Create the comment
         Comment::create([
             'user_id' => auth()->id(),
             'post_id' => $postId,
-            'body' => $request->body
+            'body' => $request->body,
         ]);
 
         // Redirect back to the post
@@ -35,17 +35,17 @@ class CommentController extends Controller
         if (auth()->id() !== $comment->user_id) {
             return response()->json(['error' => 'You are not the owner of this comment'], 403);
         }
-    
+
         // Validate the request
         request()->validate([
-            'body' => 'required|max:255'
+            'body' => 'required|max:255',
         ]);
-    
+
         // Update the comment
         $comment->update([
-            'body' => request('body')
+            'body' => request('body'),
         ]);
-    
+
         // Return a JSON response
         return response()->json(['success' => 'Comment successfully updated!!'], 200);
     }
@@ -57,10 +57,10 @@ class CommentController extends Controller
         if (auth()->id() !== $comment->user_id) {
             return response()->json(['error' => 'You are not the owner of this comment'], 403);
         }
-    
+
         // Delete the comment
         $comment->delete();
-    
+
         // Return a JSON response
         return response()->json(['success' => 'Comment successfully deleted!!'], 200);
     }

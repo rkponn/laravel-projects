@@ -3,12 +3,13 @@
 namespace App\Models;
 
 use Database\Factories\CommentFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 
 class Comment extends Model
 {
     use HasFactory;
+
     // this model is connected to both User and Post models it has a user_id and a post_id
     protected $fillable = ['user_id', 'post_id', 'body'];
 
@@ -31,6 +32,4 @@ class Comment extends Model
     {
         return CommentFactory::new();
     }
-
-    
 }
