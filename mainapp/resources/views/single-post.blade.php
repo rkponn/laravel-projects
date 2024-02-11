@@ -28,21 +28,83 @@
       <div>
         @include('comment-form')
       </div>
-      <div class="comments mt-3">
-          @foreach($post->comments as $comment)
-            <div class="comment">
-              <div class="d-flex">
-                <div>
-                  <a href="/profile/{{$comment->user->username}}"><img class="avatar-tiny" src="{{$comment->user->avatar}}" /></a>
-                </div>
-                <div class="ml-3">
-                  <p>{{$comment->body}}</p>
-                  <p class="text-muted small">Posted by {{$comment->user->username}} on {{$comment->created_at->format('n/j/Y')}}</p>
-                </div>
-              </div>
-            </div>
-          @endforeach
-      </div>
-      </div>
-    </div>
+      @include('comment')
+      <script>
+        function toggleDisplay(elements, displayState) {
+          elements.forEach(element => {
+            if (typeof element === 'string') {
+              document.querySelector(element).style.display = displayState;
+            } else if (element instanceof Element) {
+              element.style.display = displayState;
+            }
+          });
+        }
+      
+        function editComment(commentId) {
+          toggleDisplay([
+            '#comment-text-' + commentId,
+            `#comment-${commentId} .fa-edit`
+          ], 'none');
+          toggleDisplay([
+            '#comment-edit-' + commentId,
+            `#comment-${commentId} .btn-primary`
+          ], 'block');
+          toggleDisplay([
+            `#comment-${commentId} .fa-trash`
+          ], 'none');
+        }
+      
+        async function saveComment(commentId) {
+          try {
+            const updatedContent = document.getElementById('comment-edit-' + commentId).value;
+      
+            // Prepare request body
+            const data = { body: updatedContent };
+      
+            // Axios POST request
+            const response = await axios.post('/comment/' + commentId + '/update', data, {
+              headers: {
+                'Content-Type': 'application/json',
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token
+              }
+            });
+      
+            document.getElementById('comment-text-' + commentId).innerHTML = '<p>' + updatedContent + '</p>';
+            toggleDisplay([
+              '#comment-text-' + commentId,
+              `#comment-${commentId} .fa-edit`
+            ], 'inline-block');
+            toggleDisplay([
+              '#comment-edit-' + commentId,
+              `#comment-${commentId} .btn-primary`
+            ], 'none');
+            toggleDisplay([
+              `#comment-${commentId} .fa-trash`
+            ], 'inline-block');
+          } catch (error) {
+            console.error('There was a problem with the Axios operation:', error);
+            throw error;
+          }
+        }
+      
+        // Delete comment
+        async function deleteComment(commentId) {
+          try {
+            // Axios DELETE request
+            const response = await axios.delete('/comment/' + commentId + '/delete', {
+              headers: {
+                'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token
+              }
+            });
+      
+            // Remove comment from the DOM
+            document.getElementById('comment-' + commentId).remove();
+          } catch (error) {
+            console.error('There was a problem with the Axios operation:', error);
+            throw error;
+          }
+        }
+      </script>
+  </div>
+</div>
 </x-layout>

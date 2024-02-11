@@ -4,12 +4,13 @@ namespace App\Http\Controllers;
 
 use App\Models\Comment;
 use Illuminate\Http\Request;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\RedirectResponse;
 
 class CommentController extends Controller
 {
     // Store a new comment
-    public function store(Request $request, $postId)
+    public function store(Request $request, $postId): RedirectResponse
     {
         // Validate the request
         $request->validate([
@@ -25,5 +26,42 @@ class CommentController extends Controller
 
         // Redirect back to the post
         return back()->with('success', 'Comment successfully created!!');
+    }
+
+    // edit a comment if the user is the owner
+    public function update(Comment $comment): JsonResponse
+    {
+        // Check if the user is the owner of the comment
+        if (auth()->id() !== $comment->user_id) {
+            return response()->json(['error' => 'You are not the owner of this comment'], 403);
+        }
+    
+        // Validate the request
+        request()->validate([
+            'body' => 'required|max:255'
+        ]);
+    
+        // Update the comment
+        $comment->update([
+            'body' => request('body')
+        ]);
+    
+        // Return a JSON response
+        return response()->json(['success' => 'Comment successfully updated!!'], 200);
+    }
+
+    // Delete a comment if the user is the owner
+    public function destroy(Comment $comment): JsonResponse
+    {
+        // Check if the user is the owner of the comment
+        if (auth()->id() !== $comment->user_id) {
+            return response()->json(['error' => 'You are not the owner of this comment'], 403);
+        }
+    
+        // Delete the comment
+        $comment->delete();
+    
+        // Return a JSON response
+        return response()->json(['success' => 'Comment successfully deleted!!'], 200);
     }
 }

@@ -68,3 +68,5 @@ Route::post('/send-chat-message', [ChatController::class, 'create'])->middleware
 
 // Comment Routes
 Route::post('/post/{post}/comment', [CommentController::class, 'store'])->middleware('auth');
+Route::post('/comment/{comment}/update', [CommentController::class, 'update'])->middleware('auth');
+Route::delete('/comment/{comment}/delete', [CommentController::class, 'destroy'])->middleware('auth');
