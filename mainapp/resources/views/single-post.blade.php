@@ -62,7 +62,7 @@
             const data = { body: updatedContent };
       
             // Axios POST request
-            const response = await axios.post('/comment/' + commentId, data, {
+            const response = await axios.put('/comment/' + commentId, data, {
               headers: {
                 'Content-Type': 'application/json',
                 'X-CSRF-TOKEN': '{{ csrf_token() }}' // CSRF token
