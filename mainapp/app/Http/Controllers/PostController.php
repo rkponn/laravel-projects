@@ -11,17 +11,6 @@ use Illuminate\View\View;
 
 class PostController extends Controller
 {
-    // Search for posts
-    public function index($term): Collection
-    {
-        // Performs a search for posts based on term and returns a collection of posts with user information
-        $postIds = Post::search($term)->keys();
-
-        return Post::whereIn('id', $postIds)
-            ->with('user:id,username,avatar')
-            ->get();
-    }
-
     // Create post
     public function create(): View
     {

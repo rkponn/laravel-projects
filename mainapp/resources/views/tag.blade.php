@@ -6,8 +6,10 @@
         name="tags" 
         class="form-control" 
         placeholder="Enter tags, separated by commas, no spaces"
-        value="{{ old('tags', $post->tags->pluck('name')->implode(',')) }}">
+        value="{{ old('tags', $post->tags->pluck('name')->unique()->implode(',')) }}">
     @else
-        <p>{{ $post->tags->pluck('name')->implode(', ') }}</p>
+        @foreach($post->tags->unique('name') as $tag)
+            <span class="badge badge-primary">{{ $tag->name }}</span>
+        @endforeach
     @endif
 </div>

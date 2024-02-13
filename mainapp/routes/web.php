@@ -1,18 +1,19 @@
 <?php
 
-use App\Http\Controllers\AvatarController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\FollowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AvatarController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\SearchController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\ProfilePostController;
 use App\Http\Controllers\ProfileFollowerController;
 use App\Http\Controllers\ProfileFollowingController;
-use App\Http\Controllers\ProfilePostController;
-use App\Http\Controllers\TagController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserLoginController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -39,8 +40,10 @@ Route::post('/logout', [UserLoginController::class, 'destroy'])->middleware('mus
 Route::get('/manage-avatar', [AvatarController::class, 'create'])->middleware('mustBeLoggedIn');
 Route::post('/manage-avatar', [AvatarController::class, 'store'])->middleware('mustBeLoggedIn');
 
+// Search Routes
+Route::get('/search/{term}', [SearchController::class, 'index'])->middleware('auth');
+
 // Post Routes
-Route::get('/search/{term}', [PostController::class, 'index'])->middleware('auth');
 Route::get('/post', [PostController::class, 'create'])->middleware('mustBeLoggedIn');
 Route::post('/post', [PostController::class, 'store'])->middleware('auth');
 Route::get('/post/{post}', [PostController::class, 'show'])->middleware('auth');

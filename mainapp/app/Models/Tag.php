@@ -2,13 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
+use App\Models\Post;
 use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 class Tag extends Model
 {
     use HasFactory;
+    use Searchable;
 
     //  only the 'name' attribute of the Tag model can be mass assigned.
     protected $fillable = ['name'];
@@ -24,6 +27,21 @@ class Tag extends Model
         static::creating(function ($tag) {
             $tag->slug = Str::slug($tag->name);
         });
+    }
+
+    public function posts()
+    {
+        return $this->morphedByMany(Post::class, 'taggable');
+    }
+
+    // to search for tags
+    public function toSearchableArray()
+    {
+        return [
+            'id' => $this->id,
+            'name' => $this->name,
+            'slug' => $this->slug,
+        ];
     }
 
     public function taggables()
