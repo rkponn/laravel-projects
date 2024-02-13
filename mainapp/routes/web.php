@@ -1,17 +1,18 @@
 <?php
 
-use App\Http\Controllers\AvatarController;
+use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\TagController;
 use App\Http\Controllers\ChatController;
-use App\Http\Controllers\CommentController;
-use App\Http\Controllers\FollowController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\AvatarController;
+use App\Http\Controllers\FollowController;
+use App\Http\Controllers\CommentController;
+use App\Http\Controllers\UserLoginController;
+use App\Http\Controllers\ProfilePostController;
 use App\Http\Controllers\ProfileFollowerController;
 use App\Http\Controllers\ProfileFollowingController;
-use App\Http\Controllers\ProfilePostController;
-use App\Http\Controllers\UserController;
-use App\Http\Controllers\UserLoginController;
-use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -70,3 +71,6 @@ Route::post('/send-chat-message', [ChatController::class, 'create'])->middleware
 Route::post('/post/{post}/comment', [CommentController::class, 'store'])->middleware('auth');
 Route::put('/comment/{comment}', [CommentController::class, 'update'])->middleware('auth');
 Route::delete('/comment/{comment}', [CommentController::class, 'destroy'])->middleware('auth');
+
+// Tag
+Route::resource('tags', TagController::class);

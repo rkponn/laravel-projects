@@ -22,6 +22,31 @@ class Post extends Model
         'user_id',
     ];
 
+    public function syncTags(array $tagNames)
+    {
+        // Get the current list of tag ids for this post
+        $currentTagIds = $this->tags()->pluck('tags.id');
+    
+        // Find or create the tags
+        $tagIds = collect($tagNames)->map(function ($tagName) {
+            $tag = Tag::firstOrCreate(['name' => $tagName]);
+            return $tag->id;
+        });
+    
+        // Find tags to add and to remove
+        $tagsToAdd = $tagIds->diff($currentTagIds);
+        $tagsToRemove = $currentTagIds->diff($tagIds);
+    
+        // Add and remove the tags
+        $this->tags()->attach($tagsToAdd);
+        $this->tags()->detach($tagsToRemove);
+    }
+    
+    public function tags()
+    {
+        return $this->morphToMany(Tag::class, 'taggable');
+    }
+
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id');

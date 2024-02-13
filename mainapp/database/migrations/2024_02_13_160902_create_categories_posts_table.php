@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->boolean('is_admin')->default(0);
+        Schema::create('categories_posts', function (Blueprint $table) {
+            $table->id();
+            $table->foreignId('category_id')->constrained();
+            $table->foreignId('post_id')->constrained();
+            $table->timestamps();
         });
     }
 
@@ -21,8 +24,7 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('is_admin');
-        });
+        // drop table
+        Schema::dropIfExists('categories_posts');
     }
 };

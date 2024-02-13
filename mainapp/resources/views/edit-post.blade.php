@@ -19,7 +19,7 @@
                 <p class="m-0 small alert alert-danger shadow-sm">{{$message}}</p>
             @enderror
         </div>
-  
+        @include('tag')
           <button class="btn btn-primary">Save Changes</button>
         </form>
       </div>

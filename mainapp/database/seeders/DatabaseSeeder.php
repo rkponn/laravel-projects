@@ -2,12 +2,13 @@
 
 namespace Database\Seeders;
 
-use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
+use App\Models\Comment;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
+use Database\Seeders\CategoriesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -18,6 +19,11 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
+        // call seeders before running factories
+        $this->call([
+            CategoriesTableSeeder::class,
+        
+        ]);
         /**
          * @see https://laravel.com/docs/10.x/eloquent-factories#factory-relationships
          */
@@ -40,19 +46,5 @@ class DatabaseSeeder extends Seeder
             )
             ->create();
 
-        // DB::table('follows')->insert([
-        //     'user_id' => 200,
-        //     'followeduser' => 100
-        // ]);
-
-        // DB::table('follows')->insert([
-        //     'user_id' => 300,
-        //     'followeduser' => 100
-        // ]);
-
-        // DB::table('follows')->insert([
-        //     'user_id' => 300,
-        //     'followeduser' => 200
-        // ]);
     }
 }

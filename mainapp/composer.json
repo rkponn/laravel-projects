@@ -15,7 +15,8 @@
         "laravel/scout": "^10.8",
         "laravel/tinker": "^2.8",
         "opcodesio/log-viewer": "^3.1",
-        "pusher/pusher-php-server": "^7.2"
+        "pusher/pusher-php-server": "^7.2",
+        "spatie/laravel-tags": "^4.5"
     },
     "require-dev": {
         "barryvdh/laravel-debugbar": "^3.9",

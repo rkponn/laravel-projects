@@ -23,6 +23,9 @@
         {!! $post->body !!}
       </div>
 
+      <div class="mt-5">
+        @include('tag')
+      </div>
       <div class="container mt-5">
       <h4>Comments</h4>
       <div>
