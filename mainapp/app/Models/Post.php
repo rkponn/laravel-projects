@@ -3,18 +3,18 @@
 namespace App\Models;
 
 use App\Traits\Commentable;
-use Illuminate\Support\Str;
-use Laravel\Scout\Searchable;
 use Database\Factories\PostFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
+    use Commentable;
     use HasFactory;
     use Searchable;
-    use Commentable;
 
     protected $fillable = [
         'title',
@@ -26,22 +26,23 @@ class Post extends Model
     {
         // Get the current list of tag ids for this post
         $currentTagIds = $this->tags()->pluck('tags.id');
-    
+
         // Find or create the tags
         $tagIds = collect($tagNames)->map(function ($tagName) {
             $tag = Tag::firstOrCreate(['name' => $tagName]);
+
             return $tag->id;
         });
-    
+
         // Find tags to add and to remove
         $tagsToAdd = $tagIds->diff($currentTagIds);
         $tagsToRemove = $currentTagIds->diff($tagIds);
-    
+
         // Add and remove the tags
         $this->tags()->attach($tagsToAdd);
         $this->tags()->detach($tagsToRemove);
     }
-    
+
     public function tags()
     {
         return $this->morphToMany(Tag::class, 'taggable');

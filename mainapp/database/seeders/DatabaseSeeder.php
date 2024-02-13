@@ -2,13 +2,11 @@
 
 namespace Database\Seeders;
 
+use App\Models\Comment;
 use App\Models\Post;
 use App\Models\User;
-use App\Models\Comment;
 use Illuminate\Database\Seeder;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
-use Database\Seeders\CategoriesTableSeeder;
 
 class DatabaseSeeder extends Seeder
 {
@@ -22,7 +20,7 @@ class DatabaseSeeder extends Seeder
         // call seeders before running factories
         $this->call([
             CategoriesTableSeeder::class,
-        
+
         ]);
         /**
          * @see https://laravel.com/docs/10.x/eloquent-factories#factory-relationships
