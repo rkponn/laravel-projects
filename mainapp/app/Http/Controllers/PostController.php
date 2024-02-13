@@ -49,17 +49,15 @@ class PostController extends Controller
     public function show(Post $post): View
     {
         $tags = Tag::all();
-        // Pass 'isEditMode' => false to the view because this is not the edit mode
         return view('single-post', ['post' => $post, 'bodyMarkdown' => $post->body_markdown, 'tags' => $tags, 'isEditMode' => false]);
     }
 
-    // Edit Post
-    public function edit(Post $post): View
-    {
-        $tags = Tag::all();
-        // Pass 'isEditMode' => true to the view because this is the edit mode
-        return view('edit-post', compact('post', 'tags') + ['isEditMode' => true]);
-    }
+// Edit Post
+public function edit(Post $post): View
+{
+    $tags = Tag::all();
+    return view('edit-post', compact('post', 'tags') + ['isEditMode' => true]);
+}
 
     // Update Post
     public function update(Post $post, PostRequest $request): RedirectResponse
