@@ -13,9 +13,12 @@ class PostController extends Controller
     // Create post
     public function create(): View
     {
-        $tags = Tag::all();
+        // Create a new post instance
+        $post = new Post;
 
-        return view('create-post', compact('tags'));
+        // grab all tags
+        $tags = Tag::all();
+        return view('create-post', compact('post', 'tags') + ['isEditMode' => true]);
     }
 
     // Store Post
@@ -27,7 +30,7 @@ class PostController extends Controller
             'body' => $request->body,
             'user_id' => auth()->id(),
         ]);
-        // Sync tags
+        // Sync tags - split the tags string into an array and sync the tags
         $tags = explode(',', $request->tags);
         $newPost->syncTags($tags);
 
@@ -37,8 +40,8 @@ class PostController extends Controller
     // Show Post
     public function show(Post $post): View
     {
+        // grab all tags
         $tags = Tag::all();
-
         return view('single-post', ['post' => $post, 'bodyMarkdown' => $post->body_markdown, 'tags' => $tags, 'isEditMode' => false]);
     }
 
