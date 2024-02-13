@@ -16,14 +16,16 @@ class CommentController extends Controller
         $request->validate([
             'body' => 'required|max:255',
         ]);
-
+    
+        // Get the post
+        $post = \App\Models\Post::findOrFail($postId);
+    
         // Create the comment
-        Comment::create([
+        $post->comments()->create([
             'user_id' => auth()->id(),
-            'post_id' => $postId,
             'body' => $request->body,
         ]);
-
+    
         // Redirect back to the post
         return back()->with('success', 'Comment successfully created!!');
     }

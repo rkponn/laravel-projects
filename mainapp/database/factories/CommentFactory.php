@@ -29,7 +29,8 @@ class CommentFactory extends Factory
         return [
             'body' => $this->faker->sentence(),
             'user_id' => User::factory()->create()->id,
-            'post_id' => Post::factory()->create()->id,
+            'commentable_id' => Post::factory()->create()->id,
+            'commentable_type' => Post::class,
         ];
     }
 }

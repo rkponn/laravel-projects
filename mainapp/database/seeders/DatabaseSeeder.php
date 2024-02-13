@@ -34,7 +34,7 @@ class DatabaseSeeder extends Seeder
                 Comment::factory()
                     ->count(5)
                     ->state(function (array $attributes, Post $post) {
-                        return ['user_id' => $post->user_id];
+                        return ['commentable_id' => $post->id, 'commentable_type' => Post::class];
                     }),
                 'comments'
             )
