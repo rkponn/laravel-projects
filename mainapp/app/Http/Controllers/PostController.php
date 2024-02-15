@@ -23,7 +23,7 @@ class PostController extends Controller
         // grab all categories
         $categories = Category::all();
 
-        return view('create-post', compact('post', 'tags', 'categories') + ['isEditMode' => true]);
+        return view('/posts/create-post', compact('post', 'tags', 'categories') + ['isEditMode' => true]);
     }
 
     // Store Post
@@ -53,7 +53,7 @@ class PostController extends Controller
         // Fetch the post's categories
         $categories = $post->categories;
 
-        return view('single-post', compact('categories', 'post', 'tags') + ['bodyMarkdown' => $post->body_markdown, 'isEditMode' => false]);
+        return view('/posts/single-post', compact('categories', 'post', 'tags') + ['bodyMarkdown' => $post->body_markdown, 'isEditMode' => false]);
     }
 
     // Edit Post
@@ -62,7 +62,7 @@ class PostController extends Controller
         $tags = Tag::all();
         $categories = Category::all();
 
-        return view('edit-post', compact('post', 'tags', 'categories') + ['isEditMode' => true]);
+        return view('/posts/edit-post', compact('post', 'tags', 'categories') + ['isEditMode' => true]);
     }
 
     // Update Post

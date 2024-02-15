@@ -1,3 +1,3 @@
 <x-profile :sharedData="$sharedData" doctitle="{{$sharedData['username']}}'s Profile">
-  @include('profile-posts-only')
+  @include('profile.profile-posts-only')
 </x-profile>

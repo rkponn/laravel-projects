@@ -23,7 +23,7 @@ class ProfilePostController extends Controller
         // return only profile post json data
         return response()->json(
             [
-                'html' => view('profile-posts-only', ['posts' => $user->posts()->latest()->get()])->render(),
+                'html' => view('/profile/profile-posts-only', ['posts' => $user->posts()->latest()->get()])->render(),
                 'docTitle' => $user->username."'s Profile",
             ]);
     }
@@ -33,6 +33,6 @@ class ProfilePostController extends Controller
         $sharedData = $this->profileViewService->getSharedData($user);
         View::share('sharedData', $sharedData);
 
-        return view('profile-post', ['posts' => $user->posts()->latest()->get()]);
+        return view('/profile/profile-post', ['posts' => $user->posts()->latest()->get()]);
     }
 }

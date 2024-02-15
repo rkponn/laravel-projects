@@ -13,7 +13,7 @@ class HomeController extends Controller
     {
         // check if authorized
         if (auth()->check()) {
-            return view('homepage-feed', [
+            return view('/homepage/homepage-feed', [
                 'posts' => auth()->user()->feedPost()->latest()->paginate(10),
                 'username' => auth()->user()->username,
             ]);
@@ -23,7 +23,7 @@ class HomeController extends Controller
                 return Post::count();
             });
 
-            return view('homepage', ['postCount' => $postCount]);
+            return view('/homepage/homepage', ['postCount' => $postCount]);
         }
     }
 }

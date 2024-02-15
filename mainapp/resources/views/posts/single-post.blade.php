@@ -1,6 +1,6 @@
 <x-layout :doctitle="$post->title">
     <div class="container py-md-5 container--narrow">
-      @include('category-form')
+      @include('category.category-form')
       <div class="d-flex justify-content-between">
         <h2>{{$post->title}}</h2>
         @can('update', $post)
@@ -25,14 +25,14 @@
       </div>
 
       <div class="mt-5">
-        @include('tag')
+        @include('tag.tag')
       </div>
       <div class="container mt-5">
       <h4>Comments</h4>
       <div>
-        @include('comment-form')
+        @include('comment.comment-form')
       </div>
-      @include('comment')
+      @include('comment.comment')
       <script>
         function toggleDisplay(elements, displayState) {
           elements.forEach(element => {

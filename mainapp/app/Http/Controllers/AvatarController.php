@@ -13,7 +13,7 @@ class AvatarController extends Controller
     // Avatar form
     public function create(): View
     {
-        return view('avatar-form');
+        return view('/avatar/avatar-form');
     }
 
     // Store the avatar

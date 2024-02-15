@@ -23,7 +23,7 @@ class ProfileFollowerController extends Controller
         // return only profile followers json data
         return response()->json(
             [
-                'html' => view('profile-followers-only', ['followers' => $user->followers()->latest()->get()])->render(),
+                'html' => view('/profile/profile-followers-only', ['followers' => $user->followers()->latest()->get()])->render(),
                 'docTitle' => $user->username."'s Followers",
             ]);
     }
@@ -34,6 +34,6 @@ class ProfileFollowerController extends Controller
         $followers = $this->profileViewService->getProfileFollowers($user);
         View::share('sharedData', $sharedData); // Sharing data with the view
 
-        return view('profile-followers', ['followers' => $followers]);
+        return view('/profile/profile-followers', ['followers' => $followers]);
     }
 }
