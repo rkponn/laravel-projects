@@ -11,7 +11,7 @@ class HomeController extends Controller
     // Home Page Method
     public function index(): View
     {
-        // globally available auth - if logged in or not
+        // check if authorized
         if (auth()->check()) {
             return view('homepage-feed', [
                 'posts' => auth()->user()->feedPost()->latest()->paginate(10),

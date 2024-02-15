@@ -43,12 +43,10 @@ class CommentController extends Controller
             'body' => 'required|max:255',
         ]);
 
-        // Update the comment
         $comment->update([
             'body' => request('body'),
         ]);
 
-        // Return a JSON response
         return response()->json(['success' => 'Comment successfully updated!!'], 200);
     }
 
@@ -60,10 +58,7 @@ class CommentController extends Controller
             return response()->json(['error' => 'You are not the owner of this comment'], 403);
         }
 
-        // Delete the comment
         $comment->delete();
-
-        // Return a JSON response
         return response()->json(['success' => 'Comment successfully deleted!!'], 200);
     }
 }

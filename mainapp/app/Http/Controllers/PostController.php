@@ -49,7 +49,6 @@ class PostController extends Controller
     public function edit(Post $post): View
     {
         $tags = Tag::all();
-
         return view('edit-post', compact('post', 'tags') + ['isEditMode' => true]);
     }
 
@@ -74,7 +73,6 @@ class PostController extends Controller
     public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
-
         // send user back to their profile upon deletion
         return redirect('/profile/'.auth()->user()->username)->with('success', 'Suceessfully deleted.');
     }

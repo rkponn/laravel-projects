@@ -2,8 +2,9 @@
 
 namespace App\Services;
 
-use App\Models\Follow;
 use App\Models\User;
+use App\Models\Follow;
+use Illuminate\Support\Collection;
 
 class ProfileViewService
 {
@@ -29,12 +30,12 @@ class ProfileViewService
         ];
     }
 
-    public function getProfileFollowers(User $user): \Illuminate\Support\Collection
+    public function getProfileFollowers(User $user): Collection
     {
         return $user->followers()->latest()->get();
     }
 
-    public function getProfileFollowing(User $user): \Illuminate\Support\Collection
+    public function getProfileFollowing(User $user): Collection
     {
         return $user->following()->latest()->get();
     }
