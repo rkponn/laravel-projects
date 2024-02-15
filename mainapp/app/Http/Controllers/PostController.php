@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Tag;
-use App\Models\Post;
-use App\Models\Category;
-use Illuminate\View\View;
 use App\Http\Requests\PostRequest;
+use App\Models\Category;
+use App\Models\Post;
+use App\Models\Tag;
 use Illuminate\Http\RedirectResponse;
+use Illuminate\View\View;
 
 class PostController extends Controller
 {
@@ -38,7 +38,7 @@ class PostController extends Controller
         // Sync tags - split the tags string into an array and sync the tags
         $tags = explode(',', $request->tags);
         $newPost->syncTags($tags);
-        
+
         $newPost->categories()->sync($request->category_id); // Sync the categories
 
         return redirect("/post/{$newPost->id}")->with('success', 'Blog post successfully created!!');
@@ -51,7 +51,7 @@ class PostController extends Controller
         $tags = Tag::all();
 
         // Fetch the post's categories
-        $categories = $post->categories; 
+        $categories = $post->categories;
 
         return view('single-post', compact('categories', 'post', 'tags') + ['bodyMarkdown' => $post->body_markdown, 'isEditMode' => false]);
     }
@@ -88,6 +88,7 @@ class PostController extends Controller
     public function destroy(Post $post): RedirectResponse
     {
         $post->delete();
+
         // send user back to their profile upon deletion
         return redirect('/profile/'.auth()->user()->username)->with('success', 'Suceessfully deleted.');
     }

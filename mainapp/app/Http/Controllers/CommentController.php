@@ -59,6 +59,7 @@ class CommentController extends Controller
         }
 
         $comment->delete();
+
         return response()->json(['success' => 'Comment successfully deleted!!'], 200);
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Services;
 
-use App\Models\User;
 use App\Models\Follow;
+use App\Models\User;
 use Illuminate\Support\Collection;
 
 class ProfileViewService

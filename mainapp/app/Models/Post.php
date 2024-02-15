@@ -2,15 +2,13 @@
 
 namespace App\Models;
 
-use App\Models\Tag;
-use App\Models\Category;
 use App\Traits\Commentable;
-use Illuminate\Support\Str;
-use Laravel\Scout\Searchable;
 use Database\Factories\PostFactory;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Support\Str;
+use Laravel\Scout\Searchable;
 
 class Post extends Model
 {
@@ -50,10 +48,10 @@ class Post extends Model
         return $this->morphToMany(Tag::class, 'taggable');
     }
 
-public function categories()
-{
-    return $this->morphToMany(Category::class, 'categorizable', 'category_post');
-}
+    public function categories()
+    {
+        return $this->morphToMany(Category::class, 'categorizable', 'category_post');
+    }
 
     public function user()
     {
