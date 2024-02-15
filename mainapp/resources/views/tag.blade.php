@@ -1,5 +1,5 @@
 <div class="form-group">
-    <label for="tags">Tags</label>
+    <label for="tags">Tags: </label>
     @if($isEditMode)
         <input type="text" 
         id="tags" 

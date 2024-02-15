@@ -4,6 +4,7 @@
             <p><small><strong><a href="/post/{{$post->id}}">&laquo; Go Back</a></strong></small></p>
             @csrf
             @method('PUT')
+            @include('category-form')
           <div class="form-group">
             <label for="post-title" class="text-muted mb-1"><small>Title</small></label>
             <input value="{{old('title', $post->title)}}" required name="title" id="post-title" class="form-control form-control-lg form-control-title" type="text" placeholder="" autocomplete="off" />

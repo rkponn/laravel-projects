@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\PostRequest;
-use App\Models\Post;
 use App\Models\Tag;
-use Illuminate\Http\RedirectResponse;
+use App\Models\Post;
+use App\Models\Category;
 use Illuminate\View\View;
+use App\Http\Requests\PostRequest;
+use Illuminate\Http\RedirectResponse;
 
 class PostController extends Controller
 {
@@ -18,7 +19,11 @@ class PostController extends Controller
 
         // grab all tags
         $tags = Tag::all();
-        return view('create-post', compact('post', 'tags') + ['isEditMode' => true]);
+
+        // grab all categories
+        $categories = Category::all();
+
+        return view('create-post', compact('post', 'tags', 'categories') + ['isEditMode' => true]);
     }
 
     // Store Post
@@ -33,6 +38,8 @@ class PostController extends Controller
         // Sync tags - split the tags string into an array and sync the tags
         $tags = explode(',', $request->tags);
         $newPost->syncTags($tags);
+        
+        $newPost->categories()->sync($request->category_id); // Sync the categories
 
         return redirect("/post/{$newPost->id}")->with('success', 'Blog post successfully created!!');
     }
@@ -42,14 +49,20 @@ class PostController extends Controller
     {
         // grab all tags
         $tags = Tag::all();
-        return view('single-post', ['post' => $post, 'bodyMarkdown' => $post->body_markdown, 'tags' => $tags, 'isEditMode' => false]);
+
+        // Fetch the post's categories
+        $categories = $post->categories; 
+
+        return view('single-post', compact('categories', 'post', 'tags') + ['bodyMarkdown' => $post->body_markdown, 'isEditMode' => false]);
     }
 
     // Edit Post
     public function edit(Post $post): View
     {
         $tags = Tag::all();
-        return view('edit-post', compact('post', 'tags') + ['isEditMode' => true]);
+        $categories = Category::all();
+
+        return view('edit-post', compact('post', 'tags', 'categories') + ['isEditMode' => true]);
     }
 
     // Update Post
@@ -64,6 +77,8 @@ class PostController extends Controller
         // Sync tags
         $tags = explode(',', $request->tags);
         $post->syncTags($tags);
+
+        $post->categories()->sync($request->category_id); // Sync the categories
 
         // send the user back with a success message
         return back()->with('success', 'Post successfully updated.');

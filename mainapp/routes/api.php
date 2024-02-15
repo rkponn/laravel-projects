@@ -1,9 +1,10 @@
 <?php
 
-use App\Http\Controllers\PostApiController;
-use App\Http\Controllers\UserLoginApiController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\PostApiController;
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\UserLoginApiController;
 
 /*
 |--------------------------------------------------------------------------
@@ -26,3 +27,6 @@ Route::post('/login', [UserLoginApiController::class, 'create']);
 // Post API
 Route::post('/post', [PostApiController::class, 'store'])->middleware('auth:sanctum');
 Route::delete('/delete-post/{post}', [PostApiController::class, 'destroy'])->middleware('auth:sanctum', 'can:delete,post');
+
+// Category API
+Route::apiResource('categories', CategoryController::class);
