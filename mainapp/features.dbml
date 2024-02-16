@@ -1,0 +1,40 @@
+Table users {
+  id int [pk, increment]
+}
+
+Table posts {
+  id int [pk, increment]
+}
+
+Table categories_posts {
+  pivot_id int [pk, increment]
+  category_id int [ref: > categories.id]
+  post_id int [ref: > posts.id]
+}
+
+Table categories {
+  id int [pk, increment]
+}
+
+Table tags {
+  id int [pk, increment]
+}
+
+Table taggables {
+  pivot_id int [pk, increment]
+  tag_id int [ref: > tags.id]
+  taggable_id int
+  taggable_type string
+}
+
+Table comments {
+  pivot_id int [pk, increment]
+  user_id int [ref: > users.id]
+  commentable_id int
+  commentable_type string
+}
+
+Table forums {
+  id int [pk, increment]
+  user_id int [ref: > users.id]
+}
