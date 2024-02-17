@@ -57,6 +57,12 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    // to get the latest follow
+    public function latestFollow()
+    {
+        return $this->hasOne(Follow::class, 'user_id')->latest();
+    }
+
     // to search for users
     public function toSearchableArray()
     {

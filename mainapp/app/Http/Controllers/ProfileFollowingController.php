@@ -24,7 +24,7 @@ class ProfileFollowingController extends Controller
         return response()->json(
             [
                 'html' => view('/profile/profile-following-only', ['following' => $user->following()->latest()->get()])->render(),
-                'docTitle' => $user->username.'is Following',
+                'docTitle' => $user->username.' is Following',
             ]);
     }
 

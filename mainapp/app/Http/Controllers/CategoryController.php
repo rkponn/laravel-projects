@@ -26,20 +26,20 @@ class CategoryController extends Controller
         return $category;
     }
 
-    /**
-     * Remove the specified category from storage.
-     *
-     * @return \Illuminate\Http\RedirectResponse
-     */
-    public function destroy(Category $category): RedirectResponse
-    {
-        // Detach the category from any posts it's related to
-        $category->posts()->detach();
+    // /**
+    //  * Remove the specified category from storage.
+    //  *
+    //  * @return \Illuminate\Http\RedirectResponse
+    //  */
+    // public function destroy(Category $category): RedirectResponse
+    // {
+    //     // Detach the category from any posts it's related to
+    //     $category->posts()->detach();
 
-        // Delete the category
-        $category->delete();
+    //     // Delete the category
+    //     $category->delete();
 
-        // Redirect back with a success message
-        return back()->with('success', 'Category successfully deleted.');
-    }
+    //     // Redirect back with a success message
+    //     return back()->with('success', 'Category successfully deleted.');
+    // }
 }

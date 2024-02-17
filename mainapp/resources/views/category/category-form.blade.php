@@ -12,7 +12,7 @@
             @endforeach
         </div>
     @else
-        @foreach($post->categories->unique('name') as $category)
+        @foreach($post->categories as $category)
             <span class="badge badge-primary">{{ $category->name }}</span>
         @endforeach
     @endif
