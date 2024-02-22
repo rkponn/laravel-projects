@@ -13,6 +13,7 @@ class Category extends Model
 
     public function posts()
     {
+        // This is the many-to-many relationship between the Category and Post models
         return $this->morphedByMany(Post::class, 'categorizable', 'category_post');
     }
 }

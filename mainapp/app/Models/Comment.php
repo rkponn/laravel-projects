@@ -15,11 +15,13 @@ class Comment extends Model
 
     public function user()
     {
+        // This is the one-to-many relationship between the Comment and User models.
         return $this->belongsTo(User::class, 'user_id');
     }
 
     public function commentable()
     {
+        // This is the polymorphic relationship between the Comment and Post models.
         return $this->morphTo();
     }
 
