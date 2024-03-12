@@ -1,5 +1,7 @@
 <div class="form-group">
-    <label for="category">Category: </label>
+    @if(count($categories) > 0)
+     <label for="category">Category: </label>
+    @endif
     @if($isEditMode)
         <div style="height: 50px; overflow-y: scroll;">
             @foreach ($categories as $category)
